@@ -1,0 +1,110 @@
+// 2-bit Comparator
+module comp2bit(
+
+    input [1:0] A,
+    input [1:0] B,
+    output A_gt_B,
+    output A_lt_B,
+    output A_eq_B
+);
+
+assign A_gt_B = (A > B);
+assign A_lt_B = (A < B);
+assign A_eq_B = (A == B);
+
+endmodule
+
+
+// 4-bit Comparator
+module comp4bit(
+
+    input [3:0] A,
+    input [3:0] B,
+    output A_gt_B,
+    output A_lt_B,
+    output A_eq_B
+);
+
+assign A_gt_B = (A > B);
+assign A_lt_B = (A < B);
+assign A_eq_B = (A == B);
+
+endmodule
+
+`timescale 1ns/1ps
+
+module comparator_tb;
+
+reg [1:0] A2,B2;
+reg [3:0] A4,B4;
+
+
+wire gt2,lt2,eq2;
+wire gt4,lt4,eq4;
+
+
+// Instantiate 2-bit comparator
+comp2bit U1(
+.A(A2),
+.B(B2),
+.A_gt_B(gt2),
+.A_lt_B(lt2),
+.A_eq_B(eq2)
+);
+
+
+// Instantiate 4-bit comparator
+comp4bit U2(
+.A(A4),
+.B(B4),
+.A_gt_B(gt4),
+.A_lt_B(lt4),
+.A_eq_B(eq4)
+
+);
+
+
+initial begin
+
+$dumpfile("comparator.vcd");
+$dumpvars(0, comparator_tb);
+
+$display("A2 B2 | gt2 lt2 eq2");
+ $monitor("%b %b | %b %b %b",A2,B2,gt2,lt2,eq2);
+
+A2=2'b00; B2=2'b00; #10;
+A2=2'b00; B2=2'b01; #10;
+A2=2'b00; B2=2'b10; #10;
+A2=2'b00; B2=2'b11; #10;
+
+A2=2'b01; B2=2'b00; #10; 
+A2=2'b01; B2=2'b01; #10; 
+A2=2'b01; B2=2'b10; #10; 
+A2=2'b01; B2=2'b11; #10; 
+
+A2=2'b10; B2=2'b00; #10; 
+A2=2'b10; B2=2'b01; #10; 
+A2=2'b10; B2=2'b10; #10; 
+A2=2'b10; B2=2'b11; #10;
+
+A2=2'b11; B2=2'b00; #10; 
+A2=2'b11; B2=2'b01; #10;
+A2=2'b11; B2=2'b10; #10; 
+A2=2'b11; B2=2'b11; #10; 
+
+
+$display("4 BIT TEST");
+$display("A4 B4 | gt4 lt4 eq4");
+ $monitor("%b %b | %b %b %b",A4,B4,gt4,lt4,eq4);
+
+A4=4'b0000; B4=4'b0000; #10;
+A4=4'b0001; B4=4'b0010; #10; 
+A4=4'b0100; B4=4'b0011; #10; 
+A4=4'b0110; B4=4'b0110; #10; 
+A4=4'b1111; B4=4'b0111; #10; 
+A4=4'b0001; B4=4'b0001; #10;
+$finish;
+
+end
+
+endmodule
