@@ -140,6 +140,8 @@ This project demonstrates:
 ---
 
 # Author
+V.Venkata Harinath
+Diploma ECE SVGP TIRUPATI
 
 Electronics Engineering Student
 Digital Design Practice Project
